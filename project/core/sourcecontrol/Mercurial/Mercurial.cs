@@ -155,6 +155,12 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Mercurial
 		[ReflectorProperty("branch", Required = false)]
 		public string Branch { get; set; }
 
+                /// <summary>
+                /// Whether to pull changesets only for <see cref="Branch"/> or for entire repository
+                /// </summary>
+                [ReflectorProperty("pullBranchOnly", Required = false)]
+                public bool PullBranchOnly { get; set; }
+
 		/// <summary>
 		/// User name used for commits.
 		/// </summary>
@@ -624,7 +630,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Mercurial
 			ProcessArgumentBuilder buffer = new ProcessArgumentBuilder();
 			buffer.AddArgument("pull");
 
-			if(!string.IsNullOrEmpty(Branch))
+			if(PullBranchOnly && !string.IsNullOrEmpty(Branch))
 			{
 				buffer.AddArgument("-b", Branch);
 			}
